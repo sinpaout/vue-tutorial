@@ -1,19 +1,27 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h3 v-bind:title="message">{{ message }}</h3>
+    <h3 v-bind:title="message">Hello {{ message }}</h3>
     <h3>If</h3>
     <div v-if="seen">You can see me</div>
-    <h3>For</h3>
+    <h3>For: {{ clicks }}</h3>
     <ol>
-      <li v-for="(todo, index) in todos" :key="index">
-        {{index + 1}} : {{ todo.text }}
+      <li class="bold-text" v-for="(todo, index) in todos" :key="index">
+        {{ index + 1 }} : {{ todo.text }}
       </li>
     </ol>
     <button v-on:click="addTodo">Add todo</button>
+    <h3>Model Text</h3>
+    <input type="text" v-model="textVal"> : {{textVal}}
     <h3>Model</h3>
     <input type="checkbox" v-model="isChecked">
-    Checked: {{isChecked}}
+    <!-- <div v-if="isChecked">Baba</div>
+    <div v-if="!isChecked">You can see me</div> -->
+    Checked: {{ isChecked ? textVal : 'te' }}
+    <h3>Template html</h3>
+    <input type="text" v-model="rawHtml">
+    <span v-html="rawHtml"></span>
+    {{ rawHtml }}
   </div>
 </template>
 
@@ -25,21 +33,46 @@ export default {
   },
   methods: {
     addTodo: function() {
-      this.todos.push({text: 'Have to code'})
+      this.clicks = this.clicks + 1;
+
+      if (this.clicks === 1) {
+        this.todos.push({text: 'Have to code'})
+      } else if (this.clicks === 2) {
+        this.todos.push({text: 'Have to eat'})
+      } else if (this.clicks === 3) {
+        this.todos.push({text: 'Have to dance'})
+      } else {
+        this.todos.push({text: 'Have to sleep'})
+      }
     }
   },
   data: function() {
     return {
-      message: 'Hello vue',
-      isChecked: true,
+      message: 'World',
+      isChecked: false,
       seen: true,
+      rawHtml: '',
+      textVal: 'matsunaga',
+      clicks: 0,
       todos: [
         { text: 'Learn JavaScript' },
         { text: 'Learn Vue' },
         { text: 'Build something awesome' }
       ],
     }
-  }
+  },
+  beforeCreate: function () {
+    console.log(`beforeCreated:${new Date}`)
+  },
+  created: function () {
+    console.log(`created:${new Date}`)
+  },
+  mounted: function () {
+    console.log(`mounted:${new Date}`)
+  },
+  updated: function () {
+    console.log(`updated:${new Date}`)
+  },
 }
 </script>
 
@@ -58,5 +91,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.bold-text {
+  font-weight: 600;
 }
 </style>
