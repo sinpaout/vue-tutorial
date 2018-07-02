@@ -22,6 +22,15 @@
     <input type="text" v-model="rawHtml">
     <span v-html="rawHtml"></span>
     {{ rawHtml }}
+    <div v-bind:id="message">Dynamic id</div>
+    <div v-bind:id="'list-' + message">Dynamic id2</div>
+    <button v-bind:disabled="isChecked">Button</button>
+    <h3>Computed properties</h3>
+    <h3>Reversed: Hello {{ reversedMessage }} : {{now}}</h3>
+    <h3>Watch</h3>
+    First name: <input type="text" v-model="firstName">
+    Last name: <input type="text" v-model="lastName">
+    <div id="demo">{{ fullName }}</div>
   </div>
 </template>
 
@@ -59,7 +68,26 @@ export default {
         { text: 'Learn Vue' },
         { text: 'Build something awesome' }
       ],
+      firstName: 'Foo',
+      lastName: 'Bar',
+      fullName: 'Foo Bar',
     }
+  },
+  computed: {
+    reversedMessage: function() {
+      return this.message.split('').reverse().join('')
+    },
+    now: function() {
+      return Date.now()
+    }
+  },
+  watch: {
+    firstName: function() {
+      this.fullName = this.firstName + ' ' + this.lastName
+    },
+    lastName: function() {
+      this.fullName = this.firstName + ' ' + this.lastName
+    },
   },
   beforeCreate: function () {
     console.log(`beforeCreated:${new Date}`)
