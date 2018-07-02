@@ -31,6 +31,11 @@
     First name: <input type="text" v-model="firstName">
     Last name: <input type="text" v-model="lastName">
     <div id="demo">{{ fullName }}</div>
+    <h3>Class</h3>
+    <div v-bind:class="{active: isActive}">Active class</div>
+    <div v-bind:class="classObject">Class object</div>
+    <div v-bind:class="[activeClass, errorClass]">Array class</div>
+    <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">Inline style</div>
   </div>
 </template>
 
@@ -71,6 +76,16 @@ export default {
       firstName: 'Foo',
       lastName: 'Bar',
       fullName: 'Foo Bar',
+      isActive: true,
+      hasError: false,
+      classObject: {
+        active: true,
+        'text-danger': false,
+      },
+      activeClass: 'active',
+      errorClass: 'text-danger',
+      activeColor: 'red',
+      fontSize: 30,
     }
   },
   computed: {
@@ -122,5 +137,11 @@ a {
 }
 .bold-text {
   font-weight: 600;
+}
+</style>
+<style>
+.active {
+  color: green;
+  font-weight: 500;
 }
 </style>
