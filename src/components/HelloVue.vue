@@ -36,6 +36,10 @@
     <div v-bind:class="classObject">Class object</div>
     <div v-bind:class="[activeClass, errorClass]">Array class</div>
     <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">Inline style</div>
+    <h3>Vuex</h3>
+    Flux count: {{fluxCount}}
+    <button @click="commitIncrement">Increment</button>
+    <button @click="commitDecrement">Decrement</button>
   </div>
 </template>
 
@@ -58,7 +62,13 @@ export default {
       } else {
         this.todos.push({text: 'Have to sleep'})
       }
-    }
+    },
+    commitIncrement () {
+      this.$store.commit('increment')
+    },
+    commitDecrement () {
+      this.$store.commit('decrement')
+    },
   },
   data: function() {
     return {
@@ -94,6 +104,9 @@ export default {
     },
     now: function() {
       return Date.now()
+    },
+    fluxCount () {
+      return this.$store.state.count
     }
   },
   watch: {
