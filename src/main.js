@@ -17,11 +17,24 @@ const plugin = store => {
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
+    todos: [
+      { id: 1, text: 'todo1', done: true },
+      { id: 2, text: 'todo2', done: false },
+      { id: 3, text: 'todo3', done: true }
+    ]
   },
   mutations: {
     increment: state => state.count++,
     decrement: state => state.count--
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done)
+    },
+    doneTodoCount: state => {
+      return state.todos.filter(todo => todo.done).length
+    }
   },
   plugins: [plugin, createLogger()]
 })

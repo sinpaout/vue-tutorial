@@ -40,6 +40,13 @@
     Flux count: {{fluxCount}}
     <button @click="commitIncrement">Increment</button>
     <button @click="commitDecrement">Decrement</button>
+    <h3>Getters</h3>
+    Done todos: {{doneTodoCount}}
+    <ul>
+      <li v-for="todo in doneTodos" :key="todo.id">
+        {{todo}}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -107,6 +114,12 @@ export default {
     },
     fluxCount () {
       return this.$store.state.count
+    },
+    doneTodos () {
+      return this.$store.getters.doneTodos
+    },
+    doneTodoCount () {
+      return this.$store.getters.doneTodoCount
     }
   },
   watch: {
