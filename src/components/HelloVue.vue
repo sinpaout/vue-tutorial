@@ -43,8 +43,11 @@
     <h3>Getters</h3>
     Done todos: {{doneTodoCount}}
     <ul>
-      <li v-for="todo in doneTodos" :key="todo.id">
-        {{todo}}
+      <li v-for="todo in todos" :key="todo.id">
+        <label>
+          <input type="checkbox" v-model="todo.done">
+          {{todo.text}}
+        </label>
       </li>
     </ul>
   </div>
@@ -115,8 +118,8 @@ export default {
     fluxCount () {
       return this.$store.state.count
     },
-    doneTodos () {
-      return this.$store.getters.doneTodos
+    todos () {
+      return this.$store.state.todo
     },
     doneTodoCount () {
       return this.$store.getters.doneTodoCount
