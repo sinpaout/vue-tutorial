@@ -9,8 +9,8 @@ Vue.use(Vuex)
 
 const plugin = store => {
   store.subscribe(mutation => {
-    // console.log('mutation', mutation);
     if (mutation.type === 'recievedData') {
+      // console.log('mutation', mutation);
     }
   })
 }
@@ -26,7 +26,13 @@ const store = new Vuex.Store({
   },
   mutations: {
     increment: state => state.count++,
-    decrement: state => state.count--
+    incrementMore: (state, payload) => {
+      state.count = state.count + payload.more;
+    },
+    decrement: state => state.count--,
+    checkAll: (state, isDone) => {
+      state.todos.forEach(todo => todo.done = isDone)
+    }
   },
   getters: {
     doneTodos: state => {

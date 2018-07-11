@@ -39,11 +39,15 @@
     <h3>Vuex</h3>
     Flux count: {{fluxCount}}
     <button @click="commitIncrement">Increment</button>
+    <button @click="commitIncrementMore">IncrementMore</button>
     <button @click="commitDecrement">Decrement</button>
     <h3>Getters</h3>
     Done todos: {{doneTodoCount}}
+    <label>
+      All <input type="checkbox" v-model="allDone" >
+    </label>
     <ul>
-      <li v-for="todo in todos" :key="todo.id">
+      <li v-for="todo in stateTodos" :key="todo.id">
         <label>
           <input type="checkbox" v-model="todo.done">
           {{todo.text}}
@@ -76,6 +80,9 @@ export default {
     commitIncrement () {
       this.$store.commit('increment')
     },
+    commitIncrementMore () {
+      this.$store.commit({type: 'incrementMore', more: 3})
+    },
     commitDecrement () {
       this.$store.commit('decrement')
     },
@@ -106,6 +113,7 @@ export default {
       errorClass: 'text-danger',
       activeColor: 'red',
       fontSize: 30,
+      allDone: false,
     }
   },
   computed: {
@@ -118,8 +126,8 @@ export default {
     fluxCount () {
       return this.$store.state.count
     },
-    todos () {
-      return this.$store.state.todo
+    stateTodos () {
+      return this.$store.state.todos
     },
     doneTodoCount () {
       return this.$store.getters.doneTodoCount
@@ -132,6 +140,9 @@ export default {
     lastName: function() {
       this.fullName = this.firstName + ' ' + this.lastName
     },
+    allDone (newVal) {
+      this.$store.commit('checkAll', newVal)
+    }
   },
   beforeCreate: function () {
     console.log(`beforeCreated:${new Date}`)
